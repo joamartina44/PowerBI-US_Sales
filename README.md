@@ -1,4 +1,4 @@
-# PowerBI-US_Walmart
+# PowerBI-US_Walmart_Sales
 ### Este proyecto fue realizado tomando como base un Dataset público en el sitio Kaggle: 
 ### https://www.kaggle.com/datasets/andrexibiza/grocery-sales-dataset
 ### Los datos son totalmente ficticios, pero su estructura (previamente transformados) me permitió realizar una serie de análisis y dashboards en PowerBI
