@@ -1,0 +1,157 @@
+table _MedidasCalculadas
+	lineageTag: a4d5f25e-0415-4063-8c18-3018ccb1c4ef
+
+	measure FacturaciónTotal = ```
+			SUM(sales[TotalPrice]) 
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: b37252e6-ce66-46d1-8ef6-c6bf27f190f9
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure VolúmenVentas = SUM(sales[Quantity])
+		formatString: 0
+		lineageTag: 184b1c1d-e1d0-4c8b-ac1a-431445244e69
+
+	measure ClientesActivos = DISTINCTCOUNT(sales[CustomerID])
+		formatString: 0
+		lineageTag: ef5ca7e0-b7de-4fcc-b6b0-54f37d3c5a5b
+
+	measure TicketPromedio = [FacturaciónTotal]/COUNTROWS(sales)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 59c242ea-6792-4dc6-b2ca-2fa1113c4f83
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure CantidadVentas = COUNTROWS(sales)
+		formatString: 0
+		lineageTag: 69f02442-31da-4609-8aab-ec01d4d96072
+
+	measure %FacturaciónEquipoMasculino =
+			DIVIDE(
+			    CALCULATE([FacturaciónTotal], employees[Gender] = "M"),
+			    [FacturaciónTotal],
+			    0
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 8c23b153-718e-429d-b76a-bffc6f1edcbb
+
+	measure %FacturaciónEquipoFemenino =
+			DIVIDE(
+			    CALCULATE([FacturaciónTotal], 'employees'[Gender] = "F"),
+			    CALCULATE([FacturaciónTotal], ALL('employees')),
+			    0
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 22a13f7f-4374-4f5d-aec7-fbc60991b898
+
+	measure FacturacionEquipoMasculino = ```
+			
+			CALCULATE(
+			    [FacturaciónTotal], 
+			    'employees'[Gender] = "M"
+			)
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 311f20e7-38a7-4382-9452-39f3a447d24f
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure FacturacionEquipoFemenino = ```
+			
+			CALCULATE(
+			    [FacturaciónTotal], 
+			    'employees'[Gender] = "F"
+			)
+			```
+		lineageTag: d3b4d119-a97e-4c19-a8a5-3c23c7db5604
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CiudadTOPVentas = ```
+			
+			CONCATENATEX(
+			    TOPN(
+			        1, 
+			        VALUES('sales'[CityName]), 
+			        [FacturaciónTotal]
+			    ), 
+			    sales[CityName], 
+			    ", "
+			)
+			```
+		lineageTag: 4852a562-e17c-40a8-9333-0d736340ab2d
+
+	measure RankingVendedores =
+			
+			IF(
+			    ISINSCOPE('employees'[FirstName]),
+			    RANKX(
+			        ALLSELECTED('employees'[FirstName]),
+			        [FacturaciónTotal],
+			        ,
+			        DESC
+			    ),
+			    BLANK()
+			)
+		formatString: 0
+		lineageTag: 0b8e7b6f-1cec-485b-8bbd-ab95d5b02334
+
+	measure VariedadProductosVentas = DISTINCTCOUNT(sales[ProductID])
+		formatString: 0
+		lineageTag: d2408bb5-5400-4e07-8e87-c3f0c1e38728
+
+	measure ProductoTOPVentas = ```
+			
+			CONCATENATEX(
+			    TOPN(
+			        1, 
+			        ALLSELECTED(products[ProductName]),
+			        [VolúmenVentas],
+			        DESC
+			    ),
+			    products[ProductName]
+			)
+			```
+		lineageTag: 49e2bfd6-9a1e-4ddb-bc70-305dfabc17f2
+
+	measure ProductoTOPFacturación = ```
+			
+			CONCATENATEX(
+			    TOPN(
+			        1, 
+			        ALLSELECTED(products[ProductName]),
+			        [FacturaciónTotal],
+			        DESC
+			    ),
+			    products[ProductName]
+			)
+			```
+		lineageTag: c86ead6d-0307-4304-827d-8b1ecf1d1d2f
+
+	measure CiudadTOPFacturacion = ```
+			
+			CONCATENATEX(
+			    TOPN(
+			        1, 
+			        ALLSELECTED(sales[CityName]),
+			        [FacturaciónTotal],
+			        DESC
+			    ),
+			    sales[CityName]
+			)
+			```
+		lineageTag: 89906099-1fa7-498a-a1d7-52258861a05c
+
+	partition _MedidasCalculadas = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+				in
+				    #"Columnas quitadas"
+
+	annotation PBI_ResultType = Table
+

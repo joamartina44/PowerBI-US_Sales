@@ -1,0 +1,37 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-AR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["categories","countries","customers","employees","products","sales","calendario","_MedidasCalculadas","cities"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table categories
+ref table countries
+ref table customers
+ref table employees
+ref table products
+ref table sales
+ref table calendar
+ref table DateTableTemplate_bf426e13-6a2f-48b7-8df8-72c4dc93e2b6
+ref table LocalDateTable_96973b5d-ed15-417a-aabb-4bffd8b7607c
+ref table LocalDateTable_4aa3433b-aabe-4eea-a664-358cc8de0921
+ref table LocalDateTable_22fd73ef-ed8a-47a5-9d6e-e7a28dd9c3a8
+ref table LocalDateTable_d25ed361-265a-46fa-980b-2bb7514ee339
+ref table LocalDateTable_a0411059-8505-45e6-9e67-7dd9ccc573c6
+ref table LocalDateTable_b41b3314-c41b-4c41-9990-49b24947b3c3
+ref table LocalDateTable_0c695bca-0e64-4c0a-ac32-06ec457a1483
+ref table LocalDateTable_d77b4030-511e-4e50-832d-76f0d98fd61c
+ref table LocalDateTable_6384cb12-d4dd-4cae-9556-7a6a6f767b66
+ref table LocalDateTable_b2243262-f32a-4985-8425-641228555e9d
+ref table _MedidasCalculadas
+ref table cities
+
+ref cultureInfo es-ES
+

@@ -1,0 +1,42 @@
+table countries
+	lineageTag: ca49ae52-5c86-4346-8842-4536345a0e11
+
+	column CountryID
+		dataType: double
+		lineageTag: 97664d56-d4b3-4f4f-a7d9-80f44540f8f6
+		summarizeBy: none
+		sourceColumn: CountryID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CountryName
+		dataType: string
+		lineageTag: 8f1a9417-706a-475b-b56f-c7938178292d
+		summarizeBy: none
+		sourceColumn: CountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: 8f4a634f-3649-4e70-b1bb-dfc509e5438d
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	partition countries = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_countries = Origen{[Schema="dbo",Item="countries"]}[Data]
+				in
+				    dbo_countries
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

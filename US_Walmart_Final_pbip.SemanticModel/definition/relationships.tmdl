@@ -1,0 +1,89 @@
+relationship AutoDetected_e3ba1789-b592-4efa-b7e5-1d35ee0f866f
+	fromColumn: sales.ProductID
+	toColumn: products.ProductID
+
+relationship 0a78a44a-01fd-dc77-8f79-641c2d1fe4f2
+	fromColumn: products.CategoryID
+	toColumn: categories.CategoryID
+
+relationship 1eb9bb36-e968-1788-49ed-e92dace0458e
+	fromColumn: sales.SalesPersonID
+	toColumn: employees.EmployeeID
+
+relationship b6d70895-4282-7ac7-ccbd-ec121396e14e
+	fromColumn: sales.CustomerID
+	toColumn: customers.CustomerID
+
+relationship 3acdd377-c8e9-4f52-a75b-9ba4a9ae5fab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.Date
+	toColumn: LocalDateTable_96973b5d-ed15-417a-aabb-4bffd8b7607c.Date
+
+relationship 6e4a926e-4bb2-4795-89fd-67be4d2b3627
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'Start of Year'
+	toColumn: LocalDateTable_4aa3433b-aabe-4eea-a664-358cc8de0921.Date
+
+relationship 460d4c9a-164e-4634-a00b-da9549bd8d70
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'End of Year'
+	toColumn: LocalDateTable_22fd73ef-ed8a-47a5-9d6e-e7a28dd9c3a8.Date
+
+relationship 3b68c0c9-a744-4568-9dfe-9e5ad7b101f1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'Start of Month'
+	toColumn: LocalDateTable_d25ed361-265a-46fa-980b-2bb7514ee339.Date
+
+relationship 83855465-183c-4776-a09e-8426cb60ca3f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'End of Month'
+	toColumn: LocalDateTable_a0411059-8505-45e6-9e67-7dd9ccc573c6.Date
+
+relationship 4289bc11-21bd-425a-8adc-9f6503454986
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'Start of Quarter'
+	toColumn: LocalDateTable_b41b3314-c41b-4c41-9990-49b24947b3c3.Date
+
+relationship 4a14c15b-237d-4835-8bf4-c8880d71a20c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'End of Quarter'
+	toColumn: LocalDateTable_0c695bca-0e64-4c0a-ac32-06ec457a1483.Date
+
+relationship 629a3e03-9748-4ca3-8a62-775bbb799e37
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'Start of Week'
+	toColumn: LocalDateTable_d77b4030-511e-4e50-832d-76f0d98fd61c.Date
+
+relationship 6c99a50b-9c54-4337-bc1a-258361735875
+	joinOnDateBehavior: datePartOnly
+	fromColumn: calendar.'End of Week'
+	toColumn: LocalDateTable_6384cb12-d4dd-4cae-9556-7a6a6f767b66.Date
+
+relationship e715208f-690f-47b8-9722-b6c592570f0a
+	fromColumn: sales.SalesDate
+	toColumn: calendar.Date
+
+relationship 6c6774a7-d0ef-4584-95a4-260f7ba9004f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: employees.BirthDate
+	toColumn: LocalDateTable_b2243262-f32a-4985-8425-641228555e9d.Date
+
+relationship AutoDetected_ba264b77-1c4f-4f9e-97f7-1c50da8f09ab
+	fromColumn: cities.CountryID
+	toColumn: countries.CountryID
+
+relationship AutoDetected_fa3999f9-cb5f-42d3-9bf3-34df8381abd1
+	fromColumn: customers.CityID
+	toColumn: cities.CityID
+
+relationship AutoDetected_d6f5b6a9-7f67-4f7e-b585-7e29331b5e76
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: employees.CityID
+	toColumn: cities.CityID
+
+relationship AutoDetected_9ffa81b6-f45b-48ce-ae35-1d27b1e314a9
+	isActive: false
+	fromColumn: sales.CityID
+	toColumn: cities.CityID
+

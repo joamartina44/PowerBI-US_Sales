@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f99f1e7a351a3f1e9a0d",
+  "displayName": "Demografía y Geografía",
+  "displayOption": "ActualSize",
+  "height": 1200,
+  "width": 1280,
+  "pageBinding": {
+    "name": "2c6d63162beb0da912c1",
+    "type": "Default",
+    "parameters": [],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "8b0b674a965587601168",
+      "target": "a82ce24dd204ec9b4d5b",
+      "type": "NoFilter"
+    }
+  ]
+}

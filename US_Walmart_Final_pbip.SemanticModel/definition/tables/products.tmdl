@@ -1,0 +1,88 @@
+table products
+	lineageTag: 0d24b61b-6734-432e-b39a-37de0a55c717
+
+	column ProductID
+		dataType: string
+		lineageTag: 74f574c4-7494-4cd2-8c15-ca25cd6675cf
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: 116b765b-cba8-4e19-b994-80517c2ee993
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Price
+		dataType: double
+		lineageTag: adc172ce-d106-4190-896d-b02a8733fbf8
+		summarizeBy: sum
+		sourceColumn: Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CategoryID
+		dataType: string
+		lineageTag: 934e2a17-d62f-4419-ad0b-a975895bc89d
+		summarizeBy: none
+		sourceColumn: CategoryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Class
+		dataType: string
+		lineageTag: 6332a924-4300-42f6-8416-366f4d50bf42
+		summarizeBy: none
+		sourceColumn: Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifyDate
+		dataType: string
+		lineageTag: ffcd0fcd-9ea7-47f2-9d52-8de349c9c4e6
+		summarizeBy: none
+		sourceColumn: ModifyDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resistant
+		dataType: string
+		lineageTag: a08cea0f-a746-428d-88c4-e324557e0d22
+		summarizeBy: none
+		sourceColumn: Resistant
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsAllergic
+		dataType: string
+		lineageTag: 22257cb2-c512-4aa0-baf7-228cfaea9b38
+		summarizeBy: none
+		sourceColumn: IsAllergic
+
+		annotation SummarizationSetBy = Automatic
+
+	column VitalityDays
+		dataType: string
+		lineageTag: 38429b98-3c4e-458c-97f4-74db08e611e3
+		summarizeBy: none
+		sourceColumn: VitalityDays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition products = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_products = Origen{[Schema="dbo",Item="products"]}[Data]
+				in
+				    dbo_products
+
+	annotation PBI_ResultType = Table
+

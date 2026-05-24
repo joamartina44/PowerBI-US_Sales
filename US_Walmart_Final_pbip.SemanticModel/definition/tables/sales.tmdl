@@ -1,0 +1,121 @@
+table sales
+	lineageTag: 22f7a603-dff1-40ba-93ce-0fb5b00cfe5e
+
+	column SalesID
+		dataType: string
+		lineageTag: c1f63aca-5be8-4b41-8f41-f224a764707e
+		summarizeBy: none
+		sourceColumn: SalesID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesPersonID
+		dataType: string
+		lineageTag: 42c40f00-c950-467f-bbc8-facbfeabc567
+		summarizeBy: none
+		sourceColumn: SalesPersonID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 20a23364-9619-40d6-a680-983f1057cba8
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: 476a0237-0c43-44b0-9f6b-65667f44f111
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 605a5465-63e0-4062-ad37-602b4bff928b
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: string
+		lineageTag: 904ac0d9-21bd-4045-8fb6-0de8d064e140
+		summarizeBy: none
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalPrice
+		dataType: double
+		lineageTag: 21c93430-750f-4dac-9302-9ca1dfd355bd
+		summarizeBy: sum
+		sourceColumn: TotalPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4059d1ff-232f-4f93-886a-45ddbe3b1fc6
+		summarizeBy: none
+		sourceColumn: SalesDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TransactionNumber
+		dataType: string
+		lineageTag: f8b253bc-29e1-4e5d-8fb8-5eea6f7c0821
+		summarizeBy: none
+		sourceColumn: TransactionNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CityID
+		dataType: double
+		lineageTag: 38c4b9d3-339a-4e3a-ba18-c4ba05282d0d
+		summarizeBy: none
+		sourceColumn: CityID
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CityName
+		dataType: string
+		lineageTag: 6acdf4aa-2b39-431b-805c-de4ec10b75b2
+		summarizeBy: none
+		sourceColumn: CityName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_sales = Origen{[Schema="dbo",Item="sales"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(dbo_sales,{{"SalesDate", type datetime}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Tipo cambiado", each ([SalesDate] <> null)),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Filas filtradas",{{"SalesDate", type date}, {"CustomerID", Int64.Type}}),
+				    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado1", {"CustomerID"}, customers, {"CustomerID"}, "customers", JoinKind.LeftOuter),
+				    #"Se expandió customers" = Table.ExpandTableColumn(#"Consultas combinadas", "customers", {"CityID"}, {"CityID"}),
+				    #"Consultas combinadas1" = Table.NestedJoin(#"Se expandió customers", {"CityID"}, cities, {"CityID"}, "cities", JoinKind.LeftOuter),
+				    #"Se expandió cities" = Table.ExpandTableColumn(#"Consultas combinadas1", "cities", {"CityName"}, {"CityName"}),
+				    #"Filas filtradas1" = Table.SelectRows(#"Se expandió cities", each ([CityName] <> null))
+				in
+				    #"Filas filtradas1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

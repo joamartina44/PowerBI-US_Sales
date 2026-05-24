@@ -1,0 +1,91 @@
+table employees
+	lineageTag: 0c5dcf88-90a7-42fb-b6ea-45b7817d397f
+
+	column EmployeeID
+		dataType: double
+		lineageTag: 983c6ecc-ab45-49a6-a4fe-3f703f19e866
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FirstName
+		dataType: string
+		lineageTag: c1e1cfb8-63df-4fcb-aea1-9eaf2259699b
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MiddleInitial
+		dataType: string
+		lineageTag: 6010d64f-6873-4ab1-b64a-e436320b6577
+		summarizeBy: none
+		sourceColumn: MiddleInitial
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: ac9101b6-3f5c-4e5b-ae20-a3069d20f9d0
+		summarizeBy: none
+		sourceColumn: LastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column BirthDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d4305da6-7e0c-408d-ae5b-5b1d9d4a8583
+		summarizeBy: none
+		sourceColumn: BirthDate
+
+		variation Variación
+			isDefault
+			relationship: 6c6774a7-d0ef-4584-95a4-260f7ba9004f
+			defaultHierarchy: LocalDateTable_b2243262-f32a-4985-8425-641228555e9d.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 9740216a-7cbe-4373-a8d2-514be6624592
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column CityID
+		dataType: double
+		lineageTag: bf2165b7-619d-4ab6-93ee-a33c85dbaca6
+		summarizeBy: count
+		sourceColumn: CityID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HireDate
+		dataType: string
+		lineageTag: 6ed5fcae-795a-4192-9b0e-c62caff37e80
+		summarizeBy: none
+		sourceColumn: HireDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition employees = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_employees = Origen{[Schema="dbo",Item="employees"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(dbo_employees,{{"BirthDate", type datetime}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "US_Walmart_Final_pbip"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "847735f9-ecca-475d-b9ba-0090a0ee0b7f"
+  }
+}

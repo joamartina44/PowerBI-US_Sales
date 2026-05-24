@@ -1,0 +1,65 @@
+table cities
+	lineageTag: 81fad3ca-8793-4a71-93f4-8cc24b31042f
+
+	column CityID
+		dataType: double
+		lineageTag: 476e750e-7378-40d0-b7bf-06e39ccf42ed
+		summarizeBy: none
+		sourceColumn: CityID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CityName
+		dataType: string
+		lineageTag: 397c87dc-289e-4227-9d01-783883efb44b
+		summarizeBy: none
+		sourceColumn: CityName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Zipcode
+		dataType: double
+		lineageTag: efd81299-b34b-4236-b654-a94babbfccb5
+		summarizeBy: none
+		sourceColumn: Zipcode
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CountryID
+		dataType: double
+		lineageTag: d1056c15-7e39-4368-88fc-056d95221b25
+		summarizeBy: none
+		sourceColumn: CountryID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FullLocation
+		dataType: string
+		lineageTag: 71ebb0e0-02b6-4730-b73a-c9952ec71531
+		dataCategory: Place
+		summarizeBy: none
+		sourceColumn: FullLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition cities = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_cities = Origen{[Schema="dbo",Item="cities"]}[Data],
+				    #"Personalizada agregada" = Table.AddColumn(dbo_cities, "FullLocation", each [CityName]& ", United States"),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Personalizada agregada",{{"FullLocation", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

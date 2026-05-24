@@ -1,0 +1,77 @@
+table customers
+	lineageTag: cb8ac94e-c990-49eb-bf08-7579046c8a3f
+
+	column CustomerID
+		dataType: double
+		lineageTag: c003cbf0-7ac3-43d7-b8fd-88b0ed70a313
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FirstName
+		dataType: string
+		lineageTag: d9e1a30c-afac-4a95-b1bc-578efe005f55
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MiddleInitial
+		dataType: string
+		lineageTag: 38a4b8e7-299c-4bbe-a888-e88509141a69
+		summarizeBy: none
+		sourceColumn: MiddleInitial
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: 41137fd5-8f3a-4a8c-8b2d-0dea59d183d2
+		summarizeBy: none
+		sourceColumn: LastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CityID
+		dataType: double
+		lineageTag: 95851085-ae30-43cc-8a99-c1ce0f5f75c5
+		summarizeBy: none
+		sourceColumn: CityID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Address
+		dataType: string
+		lineageTag: f58303ba-e544-44e4-8bfc-e3eb4277cc93
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName
+		dataType: string
+		lineageTag: 5e22cf55-6d10-44d1-a247-4b0dafbdf3b0
+		summarizeBy: none
+		sourceColumn: FullName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition customers = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("JOA-MARTINA\SQLEXPRESS", "USWalmartSales"),
+				    dbo_customers = Origen{[Schema="dbo",Item="customers"]}[Data],
+				    #"Columna combinada insertada" = Table.AddColumn(dbo_customers, "FullName", each Text.Combine({[FirstName], " ", [LastName]}), type text)
+				in
+				    #"Columna combinada insertada"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+
